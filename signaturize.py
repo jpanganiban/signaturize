@@ -86,6 +86,8 @@ class Signaturize(object):
             data.pop("timestamp")
         if "public_key" in data:
             data.pop("public_key")
+        if "signature" in data:
+            data.pop("signature")
 
         self._data = data
         self.timestamp = int(time.time())
@@ -137,7 +139,9 @@ class Signaturize(object):
         # Finally, produce the hex string
         return h.hexdigest()
 
-    def to_dict(self, include_public_key=True, include_timestamp=True):
+    def to_dict(self, include_public_key=True,
+                include_timestamp=True,
+                include_signature=True):
         """Convinience method for creating a dict of all
         the data usually needed for a request."""
         d = dict(self.sorted_data)
@@ -145,4 +149,6 @@ class Signaturize(object):
             d["timestamp"] = self.timestamp
         if include_public_key:
             d["public_key"] = self.public_key
+        if include_signature:
+            d["signature"] = self.signature
         return d
