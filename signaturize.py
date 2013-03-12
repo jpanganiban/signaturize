@@ -91,7 +91,7 @@ class Signaturize(object):
             data.pop("signature")
 
         self._data = data
-        self.timestamp = int(time.time())
+        self._timestamp = int(time.time())
 
     def set_data(self, key, value):
         """Data setter"""
@@ -105,6 +105,10 @@ class Signaturize(object):
         """Remove key from data"""
         if key in self._data:
             del self._data[key]
+
+    @property
+    def timestamp(self):
+        return self._timestamp
 
     @property
     def sorted_data(self):
