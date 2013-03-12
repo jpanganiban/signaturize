@@ -1,5 +1,6 @@
 from collections import OrderedDict
 import hashlib
+import hmac
 import time
 
 
@@ -131,10 +132,8 @@ class Signaturize(object):
         """Generates the signature for the object."""
 
         # Create the the hash object. Apply the private_key
-        # then the data_string.
-        h = hashlib.sha1()
-        h.update(self.private_key)
-        h.update(self.data_string)
+        # as the key and the data_string as the data.
+        h = hmac.HMAC(self.private_key, self.data_string, hashlib.sha1)
 
         # Finally, produce the hex string
         return h.hexdigest()
